@@ -24,4 +24,5 @@ Data_State = True
 
 # Load the data file
 numpy.loadtxt(filename)
+
 # Crossing count initialization

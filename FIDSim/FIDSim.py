@@ -4,7 +4,7 @@ import sys
 import matplotlib.pyplot as plt
 
 # This code is run using the following input format:
-# < python FIDSim.py [Number of points] [Frequency] [Timestep] [SNR (dB)] [Phase Offset (radians)]>
+# < python FIDSim.py [Number of points] [Frequency] [Timestep] [SNR (dB)] [Phase Offset (radians)] [Output Filename]>
 
 # Take inputs:
 NumPoints = int(sys.argv[1])
@@ -12,6 +12,7 @@ Freq = float(sys.argv[2])
 Timestep = float(sys.argv[3])
 SNR = float(sys.argv[4])
 PhaseOffset = float(sys.argv[5])
+OutFile = str(sys.argv[6])
 
 # Calculate the variance from the given SNR value in order to set the width of the Gaussian noise to be added
 Variance = np.sqrt(1.0/(2.0*SNR))
@@ -26,4 +27,4 @@ for sample in range(NumPoints):
     Time.append(sample*Timestep)
 
 # Output
-print([Time,Sim_FID_Data])
+np.savetxt(OutFile, np.transpose(np.array([Time,Sim_FID_Data])))
