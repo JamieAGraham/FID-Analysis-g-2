@@ -23,6 +23,31 @@ thresh = float(sys.argv[2])
 Data_State = True
 
 # Load the data file
-numpy.loadtxt(filename)
+Data_Input = np.loadtxt(filename)
 
 # Crossing count initialization
+if (Data_Input[1][0] <= 0):
+    Data_State = False
+
+#Initialise variables to store the total number of crossings (ZC_Count) and a list to store the indices of the crossings
+ZC_Count = 0
+Crossings = []
+
+# Iterate through the data set, updating the zero crossing count and state machine each time we pass the threshold
+for index, datum in enumerate(Data_Input[1]):
+    if Data_State == True and datum <= -thresh:
+        Data_State = False
+        ZC_Count += 1
+        Crossings.append(index)
+    if Data_State == False and datum >= thresh:
+        Data_State = True
+        ZC_Count += 1
+        Crossings.append(index)
+
+# Find the total time from the first crossing to the last crossing as stored in Crossings
+Total_Time = Data_Input[ 0 ][ Crossings[-1] ] - Data_Input[ 0 ][ Crossings[0] ]
+
+# Calculate frequency as ()#crossings - 1 )/ Total Time
+Frequency = (ZC_Count - 1.)/Total_Time
+
+print Frequency
