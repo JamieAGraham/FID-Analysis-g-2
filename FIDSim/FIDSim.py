@@ -15,7 +15,7 @@ PhaseOffset = float(sys.argv[5])
 OutFile = str(sys.argv[6])
 
 # Calculate the variance from the given SNR value in order to set the width of the Gaussian noise to be added
-Variance = np.sqrt(1.0/(2.0*SNR))
+Variance = (1.0/(2.0*SNR))
 
 # Prepare return lists
 Sim_FID_Data = []

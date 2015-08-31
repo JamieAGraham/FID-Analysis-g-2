@@ -24,7 +24,7 @@ Data_State = True
 
 # Load the data file
 Data_Input = np.loadtxt(filename)
-
+Data_Input = np.transpose(Data_Input)
 # Crossing count initialization
 if (Data_Input[1][0] <= 0):
     Data_State = False
@@ -43,11 +43,11 @@ for index, datum in enumerate(Data_Input[1]):
         Data_State = True
         ZC_Count += 1
         Crossings.append(index)
-
+        
 # Find the total time from the first crossing to the last crossing as stored in Crossings
 Total_Time = Data_Input[ 0 ][ Crossings[-1] ] - Data_Input[ 0 ][ Crossings[0] ]
 
-# Calculate frequency as ()#crossings - 1 )/ Total Time
-Frequency = (ZC_Count - 1.)/Total_Time
+# Calculate frequency as ()#crossings - 1 )/ (2*Total Time)
+Frequency = (ZC_Count - 1.)/(2*Total_Time)
 
 print Frequency
