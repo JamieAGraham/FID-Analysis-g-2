@@ -24,8 +24,8 @@ Time = []
 
 # For each required data point, calculate the sinusoid, add noise and calculate the time. Store these in their respective arrays
 for sample in range(NumPoints):
-    Sim_FID_Data.append(np.sin(2.0*np.pi*Freq*Timestep*sample + PhaseOffset) + np.random.normal(0,Variance))
-    Time.append(sample*Timestep)
+    Sim_FID_Data.append(np.sin(2.0*np.pi*Freq*Timestep*sample + PhaseOffset)*np.exp(Timestep*sample/Decay_Time) + np.random.normal(0,Variance))
+    Time.append(sample*Timestep)s
 
 # Output
 np.savetxt(OutFile, np.transpose(np.array([Time,Sim_FID_Data])))
