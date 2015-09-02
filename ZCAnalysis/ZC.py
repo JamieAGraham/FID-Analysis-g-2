@@ -48,7 +48,9 @@ for index, datum in enumerate(Data_Input[1]):
 # Find the total time from the first crossing to the last crossing as stored in Crossings
 Total_Time = Data_Input[ 0 ][ Crossings[-1] ] - Data_Input[ 0 ][ Crossings[0] ]
 
-# Calculate frequency as ()#crossings - 1 )/ (2*Total Time)
+# Calculate frequency as (#crossings - 1 )/ (2*Total Time)
 Frequency = (ZC_Count - 1.)/(2*Total_Time)
 
 print Frequency
+with open( filename , "ab") as myfile:
+    myfile.write(Frequency + ", ")
