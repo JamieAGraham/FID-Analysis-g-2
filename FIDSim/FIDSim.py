@@ -1,3 +1,4 @@
+from __future__ import division
 import numpy as np
 import random
 import sys
@@ -5,6 +6,10 @@ import matplotlib.pyplot as plt
 
 # This code is run using the following input format:
 # < python FIDSim.py [Number of points] [Frequency] [Timestep] [Decay Constant (Tau)] [SNR (dB)] [Phase Offset (radians)] [Output Filename]>
+
+# For incorrect inputs:
+if (sys.argv[0] != 7):
+    sys.exit("The format of your input is incorrect. Please enter input in the form of: < python FIDSim.py [Number of points] [Frequency] [Timestep] [Decay Constant (Tau)] [SNR (dB)] [Phase Offset (radians)] [Output Filename]> ")
 
 # Take inputs:
 NumPoints = int(sys.argv[1])
@@ -25,7 +30,7 @@ Time = []
 # For each required data point, calculate the sinusoid, add noise and calculate the time. Store these in their respective arrays
 for sample in range(NumPoints):
     Sim_FID_Data.append(np.sin(2.0*np.pi*Freq*Timestep*sample + PhaseOffset)*np.exp(Timestep*sample/Decay_Time) + np.random.normal(0,Variance))
-    Time.append(sample*Timestep)s
+    Time.append(sample*Timestep)
 
 # Output
 np.savetxt(OutFile, np.transpose(np.array([Time,Sim_FID_Data])))

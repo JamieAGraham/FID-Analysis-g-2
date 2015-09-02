@@ -1,3 +1,4 @@
+from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
@@ -43,7 +44,7 @@ for index, datum in enumerate(Data_Input[1]):
         Data_State = True
         ZC_Count += 1
         Crossings.append(index)
-        
+
 # Find the total time from the first crossing to the last crossing as stored in Crossings
 Total_Time = Data_Input[ 0 ][ Crossings[-1] ] - Data_Input[ 0 ][ Crossings[0] ]
 
