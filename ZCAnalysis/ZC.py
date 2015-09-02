@@ -14,7 +14,7 @@ import sys
 # Function is called using:
 # < python ZC.py [Filename] [Threshold]>
 # where Filename is the name of the input file, e.g. "DataFile001.txt"
-#       Threshold is hysteresis level the state machine uses to filter out small deviations, c.f. Schmidt Filters
+# Threshold is hysteresis level the state machine uses to filter out small deviations, c.f. Schmidt Filters
 
 # Take input data and type it
 filename = str(sys.argv[1])

@@ -3,6 +3,10 @@ import numpy as np
 import scipy as sci
 import sys
 
+# Python implementation of the FFT quadratic peak interpolation method. This code can be run with the following format:
+# <python FFT.py [filename.txt] >
+# The format of the text file is identical to that of the ZC code, see ZC.py or readme.md for reference.
+
 # Take command line data
 filename = str(sys.argv[1])
 
@@ -28,4 +32,18 @@ max_indices = [i for i, j in enumerate(FFT[0]) if j == maximum]
 # Output
 print(np.absolute(FFT[1][max_indices[0]]))
 
-#To implement: Quadratic Peak Interpolation
+# Calculating the interpolated peak frequency through quadratic peak interpolation, where alpha beta and gamma are the points around the theoretical maximum.
+
+sample_frequency = 1./timestep
+alpha = FFT[0][max_indices[0]-1]
+beta = FFT[0][max_indices[0]]
+gamma = FFT[0][max_indices[0]+1]
+
+# See associated paper for full explanation of equation, or go to http://www.dsprelated.com/freebooks/sasp/Quadratic_Interpolation_Spectral_Peaks.html for a fantastic treatment of the subject
+fractional_peak_location = 0.5*(alpha-gamma)/(alpha - 2*beta + gamma)
+
+# Calculating the frequency by converting between bin number and frequency
+Interpolated_peak_freq = FFT[1][max_indices[0]] + fractional_peak_location*sample_frequency/n
+
+# Output:
+print Interpolated_peak_freq
