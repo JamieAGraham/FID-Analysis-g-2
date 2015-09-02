@@ -22,7 +22,10 @@ maximum = max(FFT[0])
 
 # Find the index (or indices) to which this value is associated.
 # Reminder: This requires two passes through the array, and so could be optimized by looping by hand, rather than using enumerate in this fashion.
+# Currently this seems
 max_indices = [i for i, j in enumerate(FFT[0]) if j == maximum]
 
 # Output
 print(np.absolute(FFT[1][max_indices[0]]))
+
+#To implement: Quadratic Peak Interpolation
