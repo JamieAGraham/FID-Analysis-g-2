@@ -17,10 +17,11 @@ Data_Input = np.transpose(Data_Input)
 
 # Calculate the length of the data, and the timestep
 n = Data_Input[1].size
+N = int(np.ceil(n*(Zero_Pad_Length+1)))
 timestep = Data_Input[0][1] - Data_Input[0][0]
 
 # Create an array of the square of the FFT coefficients, and the fequency bins
-FFT = [np.absolute(np.fft.rfft(Data_Input[1])), np.fft.rfftfreq(n, d=timestep)]
+FFT = [np.absolute(np.fft.rfft(Data_Input[1], n=N)), np.fft.rfftfreq(N, d=timestep)]
 
 # Find the maximum value of this FFT
 maximum = max(FFT[0])
