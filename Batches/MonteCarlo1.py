@@ -1,10 +1,11 @@
 import numpy as np
 import os
-import sys
+
 
 def ZeroCross(filename, thresh):
 
-    # Set up a state boolean such that True corresponds to the voltage being positive, and False corresponds to the voltage being negative
+    # Set up a state boolean such that True corresponds to the voltage being
+    # positive, and False corresponds to the voltage being negative
     Data_State = True
 
     # Load the data file
@@ -14,37 +15,43 @@ def ZeroCross(filename, thresh):
     if (Data_Input[1][0] <= 0):
         Data_State = False
 
-    #Initialise variables to store the total number of crossings (ZC_Count) and a list to store the indices of the crossings
+    # Initialise variables to store the total number of crossings (ZC_Count)
+    # and a list to store the indices of the crossings
     ZC_Count = 0
     Crossings = []
 
-    # Iterate through the data set, updating the zero crossing count and state machine each time we pass the threshold
+    # Iterate through the data set, updating the zero crossing count and state
+    # machine each time we pass the threshold
     for index, datum in enumerate(Data_Input[1]):
-        if Data_State == True and datum <= -thresh:
+        if Data_State is True and datum <= -thresh:
             Data_State = False
             ZC_Count += 1
             Crossings.append(index)
-        if Data_State == False and datum >= thresh:
+        if Data_State is False and datum >= thresh:
             Data_State = True
             ZC_Count += 1
             Crossings.append(index)
 
-    # Find the total time from the first crossing to the last crossing as stored in Crossings
-    Total_Time = Data_Input[ 0 ][ Crossings[-1] ] - Data_Input[ 0 ][ Crossings[0] ]
+    # Find the total time from the first crossing to the last crossing as
+    # stored in Crossings
+    Total_Time = Data_Input[0][Crossings[-1]] - Data_Input[0][Crossings[0]]
 
     # Calculate frequency as (#crossings - 1 )/ (2*Total Time)
-    Frequency = (ZC_Count - 1.)/(2*Total_Time)
+    Frequency = (ZC_Count - 1.) / (2 * Total_Time)
 
     return Frequency
 
-DATA_TABLE = [[],[],[],[]]
+DATA_TABLE = [[], [], [], []]
 
 for sample in range(100):
-    print (str(sample/100.0) + "%")
-    for SampleSize in np.logspace(3.0,6.0,num=13):
-        for SNR in np.linspace(1.0,4.0, num=9):
-            FILENAME = "../Data/MonteCarloSNR" + str(SNR) + "SampleSize" + str(SampleSize) + "Sample" + str(sample) + ".txt"
-            os.system("python FIDSim/FIDSim.py " + str(int(SampleSize)) + " 5e4 5e-06 2.0 " + str(SNR) + " 0.0 " + FILENAME)
+    print (str(sample / 100.0) + "%")
+    for SampleSize in np.logspace(3.0, 6.0, num=13):
+        for SNR in np.linspace(1.0, 4.0, num=9):
+            FILENAME = "../Data/MonteCarloSNR" + \
+                str(SNR) + "SampleSize" + str(SampleSize) + \
+                "Sample" + str(sample) + ".txt"
+            os.system("python FIDSim/FIDSim.py " + str(int(SampleSize)) +
+                      " 5e4 5e-06 2.0 " + str(SNR) + " 0.0 " + FILENAME)
             DATA_TABLE[0].append(sample)
             DATA_TABLE[1].append(SampleSize)
             DATA_TABLE[2].append(SNR)
@@ -52,4 +59,5 @@ for sample in range(100):
 
 Return_Data = np.transpose(DATA_TABLE)
 
-np.savetxt("ZCMonteCarloResults.txt", Return_Data, header = "SampleNo.\t SampleSize \t SNR \t Frequency")
+np.savetxt("ZCMonteCarloResults.txt", Return_Data,
+           header="SampleNo.\t SampleSize \t SNR \t Frequency")

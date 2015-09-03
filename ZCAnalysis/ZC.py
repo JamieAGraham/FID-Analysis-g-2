@@ -14,13 +14,15 @@ import sys
 # Function is called using:
 # < python ZC.py [Filename] [Threshold]>
 # where Filename is the name of the input file, e.g. "DataFile001.txt"
-# Threshold is hysteresis level the state machine uses to filter out small deviations, c.f. Schmidt Filters
+# Threshold is hysteresis level the state machine uses to filter out small
+# deviations, c.f. Schmidt Filters
 
 # Take input data and type it
 filename = str(sys.argv[1])
 thresh = float(sys.argv[2])
 
-# Set up a state boolean such that True corresponds to the voltage being positive, and False corresponds to the voltage being negative
+# Set up a state boolean such that True corresponds to the voltage being
+# positive, and False corresponds to the voltage being negative
 Data_State = True
 
 # Load the data file
@@ -30,11 +32,13 @@ Data_Input = np.transpose(Data_Input)
 if (Data_Input[1][0] <= 0):
     Data_State = False
 
-#Initialise variables to store the total number of crossings (ZC_Count) and a list to store the indices of the crossings
+# Initialise variables to store the total number of crossings (ZC_Count)
+# and a list to store the indices of the crossings
 ZC_Count = 0
 Crossings = []
 
-# Iterate through the data set, updating the zero crossing count and state machine each time we pass the threshold
+# Iterate through the data set, updating the zero crossing count and state
+# machine each time we pass the threshold
 for index, datum in enumerate(Data_Input[1]):
     if Data_State == True and datum <= -thresh:
         Data_State = False
@@ -45,12 +49,13 @@ for index, datum in enumerate(Data_Input[1]):
         ZC_Count += 1
         Crossings.append(index)
 
-# Find the total time from the first crossing to the last crossing as stored in Crossings
-Total_Time = Data_Input[ 0 ][ Crossings[-1] ] - Data_Input[ 0 ][ Crossings[0] ]
+# Find the total time from the first crossing to the last crossing as
+# stored in Crossings
+Total_Time = Data_Input[0][Crossings[-1]] - Data_Input[0][Crossings[0]]
 
 # Calculate frequency as (#crossings - 1 )/ (2*Total Time)
-Frequency = (ZC_Count - 1.)/(2*Total_Time)
+Frequency = (ZC_Count - 1.) / (2 * Total_Time)
 
 print Frequency
-with open( filename , "ab") as myfile:
+with open(filename, "ab") as myfile:
     myfile.write(Frequency + ", ")
