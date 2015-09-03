@@ -1,9 +1,8 @@
 import numpy as np
 import os
+import sys
 
-def ZeroCross(filename, threshold):
-    filename = str(sys.argv[1])
-    thresh = float(sys.argv[2])
+def ZeroCross(filename, thresh):
 
     # Set up a state boolean such that True corresponds to the voltage being positive, and False corresponds to the voltage being negative
     Data_State = True
@@ -42,10 +41,10 @@ DATA_TABLE = [[],[],[],[]]
 
 for sample in range(100):
     print (str(sample/100.0) + "%")
-    for SampleSize in np.logscale(3.0,6.0,num=41)
-        for SNR in np.linscale(1.0,4.0, num=9)
+    for SampleSize in np.logspace(3.0,6.0,num=13):
+        for SNR in np.linspace(1.0,4.0, num=9):
             FILENAME = "../Data/MonteCarloSNR" + str(SNR) + "SampleSize" + str(SampleSize) + "Sample" + str(sample) + ".txt"
-            os.system("python ../FIDSim/FIDSim.py " + str(SampleSize) + " 5e4 5e-06 2.0 " + str(SNR) + " 0 " + FILENAME)
+            os.system("python FIDSim/FIDSim.py " + str(int(SampleSize)) + " 5e4 5e-06 2.0 " + str(SNR) + " 0.0 " + FILENAME)
             DATA_TABLE[0].append(sample)
             DATA_TABLE[1].append(SampleSize)
             DATA_TABLE[2].append(SNR)

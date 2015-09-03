@@ -4,11 +4,12 @@ import scipy as sci
 import sys
 
 # Python implementation of the FFT quadratic peak interpolation method. This code can be run with the following format:
-# <python FFT.py [filename.txt] >
+# <python FFT.py [filename.txt] [Zero Padding Multiple]>
 # The format of the text file is identical to that of the ZC code, see ZC.py or readme.md for reference.
 
 # Take command line data
 filename = str(sys.argv[1])
+Zero_Pad_Length = float(sys.argv[2])
 
 # Take data from file
 Data_Input = np.loadtxt(filename)
@@ -19,7 +20,7 @@ n = Data_Input[1].size
 timestep = Data_Input[0][1] - Data_Input[0][0]
 
 # Create an array of the square of the FFT coefficients, and the fequency bins
-FFT = [np.absolute(np.fft.fft(Data_Input[1])), np.fft.fftfreq(n, d=timestep)]
+FFT = [np.absolute(np.fft.rfft(Data_Input[1])), np.fft.rfftfreq(n, d=timestep)]
 
 # Find the maximum value of this FFT
 maximum = max(FFT[0])
